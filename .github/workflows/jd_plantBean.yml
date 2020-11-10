@@ -6,7 +6,7 @@ name: jd_plantBean
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 23,0-14/1 * * *' #此处为UTC-0时间
+    - cron: '0 23,0-13/1 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -17,21 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          repository: lxk0301/scripts
-      - name: Use Node.js ${{ matrix.node-version }}
+      - uses: actions/checkout@v1
+      - name: Use Node.js 10.x
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: Cache node_modules
-        uses: actions/cache@v2 # 使用 GitHub 官方的缓存 Action。
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }} # 使用 package-lock.json 的 Hash 作为缓存的 key。也可以使用 package.json 代替
+          node-version: 10.x
       - name: npm install
         run: |
           npm install
