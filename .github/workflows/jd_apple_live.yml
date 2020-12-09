@@ -35,7 +35,7 @@ jobs:
           npm install
       - name: '运行 【苹果抽奖机】'
         run: |
-          npm run jd_apple_live
+          node jd_apple_live.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
