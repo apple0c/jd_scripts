@@ -35,7 +35,7 @@ jobs:
           npm install
       - name: '运行 【京喜故事】'
         run: |
-          npm run jd_jxstory
+          node jd_jxstory.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
