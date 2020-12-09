@@ -1,16 +1,11 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: 超级直播间红包雨
+name: jd_live_redrain2
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 20-23/1 * * *'
-  watch:
-    types: started
+    - cron: '22 12-15/1 * * *'
   repository_dispatch:
-    types: live_redrain
+    types: live_redrain2
 jobs:
   build:
 
@@ -19,6 +14,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          repository: shylocks/jd_scripts
+          ref: master
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -33,10 +31,11 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【超级直播间红包雨】'
+      - name: '运行 【超级直播间红包雨脚本】'
         run: |
-          npm run jd_live_redrain2
+          sed -i "s/ + new Date().getTimezoneOffset() \* 60 \* 1000 + 8 \* 60 \* 60 \* 1000//g" jd_live_redrain.js
+          node jd_live_redrain2.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
-          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
-          TG_USER_ID: ${{ secrets.TG_USER_ID }}
+          JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
+          JD_DEBUG: ${{ secrets.JD_DEBUG }}
